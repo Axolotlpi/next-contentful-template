@@ -1,6 +1,5 @@
 import type { NextPage } from 'next';
 import { ReactNode } from 'react';
-import styles from '../styles/Home.module.css';
 
 interface Props {
   children: ReactNode;
