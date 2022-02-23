@@ -4,6 +4,7 @@ import Head from 'next/head';
 import { site } from '../utils/siteConfig';
 
 export interface Props {
+  name?: string;
   title?: string;
   description?: string;
   canonicalURL?: string;
@@ -11,6 +12,7 @@ export interface Props {
 }
 
 const BaseHead: NextPage<Props> = ({
+  name,
   title,
   description,
   canonicalURL,
@@ -25,7 +27,6 @@ const BaseHead: NextPage<Props> = ({
       />
 
       <link rel="icon" href="/favicon.ico" />
-      <link rel="stylesheet" href={'../style/global.css'} />
       {/* Primary Meta Tags*/}
       <title>{title || site.title}</title>
       <meta name="title" content={title || site.title} />
@@ -33,19 +34,19 @@ const BaseHead: NextPage<Props> = ({
       {/* Sitemap */}
       <link rel="sitemap" href="/sitemap.xml" />
       {/* Canonical */}
-      <link rel="canonical" href={canonicalURL || site.url} />
+      <link rel="canonical" href={canonicalURL || site.canonicalUrl} />
       {/* RSS */}
       <link
         rel="alternate"
         type="application/rss+xml"
-        title={`${site.name} Blog`}
-        href={`${site.url}/feed/blog.xml`}
+        title={`${name || site.name}`}
+        href={`${canonicalURL || site.canonicalUrl}/feed/blog.xml`}
       />
 
       <SocialGraph
         title={title || site.title}
         description={description || site.description}
-        canonicalURL={canonicalURL || site.url}
+        canonicalURL={canonicalURL || site.canonicalUrl}
         imageUrl={socialImage}
       />
 
