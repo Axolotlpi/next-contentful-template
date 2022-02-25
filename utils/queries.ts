@@ -22,6 +22,18 @@ export const queries: { [queryNames: string]: Query } = {
     `,
     reformat: (res) => res.siteSettings,
   },
+  image: {
+    string: gql`
+      query image( #required variables
+        $imageId: String!
+        $imageTransformOptions: ImageTransformOptions
+      ) {
+        image: asset(id: $imageId) {
+          url(transform: $imageTransformOptions)
+        }
+      }
+    `,
+  },
 };
 
 export type SiteSettings = {
@@ -56,4 +68,34 @@ export type Author = {
   name: string;
   image: string;
   bio: any; //array of block text
+};
+
+export type ImageTransformOptions = {
+  width: number; //1-4000
+  height: number; //1-4000
+  quality: number; //1-100
+  cornerRadius: number;
+  resizeStrategy: 'FIT' | 'PAD' | 'FILL' | 'SCALE' | 'CROP' | 'THUMB';
+  resizeFocus:
+    | 'CENTER'
+    | 'TOP'
+    | 'TOP_RIGHT'
+    | 'RIGHT'
+    | 'BOTTOM_RIGHT'
+    | 'BOTTOM'
+    | 'BOTTOM_LEFT'
+    | 'LEFT'
+    | 'TOP_LEFT'
+    | 'FACE'
+    | 'FACES';
+  backgroundColor: string; //hex color
+  format: 'JPG' | 'JPG_PROGRESSIVE' | 'PNG' | 'PNG8' | 'WEBP' | 'AVIF';
+};
+
+export type Image = {
+  sys: {
+    id: string;
+  };
+  description: string;
+  url: string;
 };
