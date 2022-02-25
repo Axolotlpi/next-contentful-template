@@ -22,6 +22,32 @@ export const queries: { [queryNames: string]: Query } = {
     `,
     reformat: (res) => res.siteSettings,
   },
+  featuredPosts: {
+    string: gql`
+      query featuredPosts {
+        featuredBlogPosts(id: "60VW2wUa41gpp0Vg2cm39K") {
+          #singleton of an array of refs
+          featuredPostsCollection {
+            items {
+              sys {
+                id
+              }
+              mainTitle
+              teaser
+              mainImage {
+                sys {
+                  id
+                }
+                description
+                url
+              }
+            }
+          }
+        }
+      }
+    `,
+    reformat: (res) => res.featuredBlogPosts.featuredPostsCollection.items,
+  },
   image: {
     string: gql`
       query image( #required variables
@@ -47,6 +73,15 @@ export type SiteSettings = {
 export type LandingPage = {
   mainTitle: string;
 };
+
+export type FeaturedPosts = {
+  sys: {
+    id: string;
+  };
+  mainTitle: string;
+  teaser: string;
+  mainImage: Image;
+}[];
 
 export type Social = {
   name: string;
