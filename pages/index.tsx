@@ -1,31 +1,33 @@
 import type { NextPage } from 'next';
 import BaseLayout from '../layouts/BaseLayout';
 import BaseHead from '../layouts/BaseHead';
+import BlogPost from '../components/BlogPost';
+import Banner from '../components/Banner';
 import { getContent } from '../utils/helpers';
-import { LandingPage, queries, SiteSettings } from '../utils/queries';
+import { queries } from '../utils/queries';
+import type { SiteSettings } from '../utils/queries';
 
 interface Props {
   siteSettings: SiteSettings;
-  landingPage: LandingPage;
 }
 
 export async function getStaticProps() {
-  //fetches return double wrapped objs, getting inner one eg. siteSettings.siteSettings
-  const [{ siteSettings }, { landingPage }] = await Promise.all([
-    getContent(queries.siteSettings),
-    getContent(queries.landingPage),
-  ]);
+  const [siteSettings] = await Promise.all([getContent(queries.siteSettings)]);
   return {
-    props: { siteSettings, landingPage },
+    props: { siteSettings },
   };
 }
 
-const Home: NextPage<Props> = ({ siteSettings, landingPage }) => {
+const Home: NextPage<Props> = ({ siteSettings }) => {
   return (
     <BaseLayout>
       <BaseHead {...siteSettings} />
       <main>
-        <h1>{landingPage.mainTitle}</h1>
+        <h1>{siteSettings.title}</h1>
+
+        <ul>
+          <BlogPost title="not many posts here" />
+        </ul>
       </main>
 
       <footer></footer>

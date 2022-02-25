@@ -1,26 +1,27 @@
 //this file defines the coupling between cms schema and local types
 import { gql } from 'graphql-request';
 
-export const queries = {
-  siteSettings: gql`
-    query siteSettings {
-      siteSettings(id: "7HAmX0aOWhBjyDGj3uAvxM") {
-        title
-        canonicalUrl
-        description
-        socialImage {
-          url
+export type Query = {
+  string: string;
+  reformat?: (result: any) => any;
+};
+
+export const queries: { [queryNames: string]: Query } = {
+  siteSettings: {
+    string: gql`
+      query siteSettings {
+        siteSettings(id: "7HAmX0aOWhBjyDGj3uAvxM") {
+          title
+          canonicalUrl
+          description
+          socialImage {
+            url
+          }
         }
       }
-    }
-  `,
-  landingPage: gql`
-    query landingPage {
-      landingPage(id: "27EJIPqxiEWpF7VxJlhklV") {
-        mainTitle
-      }
-    }
-  `,
+    `,
+    reformat: (res) => res.siteSettings,
+  },
 };
 
 export type SiteSettings = {
