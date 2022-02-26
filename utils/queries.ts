@@ -48,6 +48,55 @@ export const queries: { [queryNames: string]: Query } = {
     `,
     reformat: (res) => res.featuredBlogPosts.featuredPostsCollection.items,
   },
+  postSlugs: {
+    string: gql`
+      query postsSlug {
+        blogPostCollection {
+          items {
+            postPageSettings {
+              slug
+            }
+          }
+        }
+      }
+    `,
+    reformat: (res) =>
+      res.blogPostCollection.items.map(
+        (item: any) => item.postPageSettings.slug
+      ),
+  },
+  postBySlug: {
+    string: gql`
+      query postBySlug($slug: String) {
+        blogPostCollection(where: { postPageSettings: { slug: $slug } }) {
+          items {
+            mainTitle
+            teaser
+            description
+            publishDate
+            author {
+              sys {
+                id
+              }
+            }
+            postPageSettings {
+              title
+              description
+              socialImage {
+                sys {
+                  id
+                }
+                description
+                url
+              }
+              slug
+            }
+          }
+        }
+      }
+    `,
+    reformat: (res) => res.blogPostCollection.items[0],
+  },
   image: {
     string: gql`
       query image( #required variables
@@ -70,6 +119,14 @@ export type SiteSettings = {
   socialImage: any;
 };
 
+export type PageSettings = {
+  sys: { id: string };
+  title: string;
+  description: string;
+  socialImage: Image;
+  slug: string;
+};
+
 export type LandingPage = {
   mainTitle: string;
 };
@@ -90,13 +147,15 @@ export type Social = {
 };
 
 export type Post = {
-  title: string;
+  //body is queried seperately
+  sys: { id: string };
+  mainTitle: string;
+  teaser: string;
   description: string;
-  slug: any;
-  mainImage: any;
-  author: Author;
-  publishedAt: string; // iso 8601
-  bodyRaw: any; // block
+  publishedDate: string; // iso 8601
+  author: { sys: { id: string } };
+  mainImage: Image;
+  postPageSettings: PageSettings;
 };
 
 export type Author = {
