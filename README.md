@@ -25,7 +25,9 @@ By no means is it a framework, just a starting point for something like a small 
 
 ## Installation
 
-clone this repo then:
+"Use this template" > "Create Repository" > clone
+
+Then:
 
 ```bash
 npm i
