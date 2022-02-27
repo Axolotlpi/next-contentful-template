@@ -1,7 +1,7 @@
 import type { NextPage } from 'next';
+import Link from 'next/link';
 import BaseLayout from '../layouts/BaseLayout';
 import BaseHead from '../layouts/BaseHead';
-import BlogPost from '../components/BlogPost';
 import Banner from '../components/Banner';
 import { getContent } from '../utils/helpers';
 import { queries } from '../utils/queries';
@@ -24,11 +24,10 @@ export async function getStaticProps() {
 
 const Home: NextPage<Props> = ({ siteSettings, featuredPosts }) => {
   return (
-    <BaseLayout>
+    <BaseLayout heading={siteSettings.title}>
       <BaseHead {...siteSettings} />
       <main>
-        <h1>{siteSettings.title}</h1>
-        <div className="h-screen w-full text-center flex flex-col justify-evently items-center">
+        <div className="p-8 w-full mx-auto md:w-11/2 lg:w-10/12 max-w-6xl text-center">
           <Banner
             title={featuredPosts[0].mainTitle}
             teaser={featuredPosts[0].teaser}
@@ -38,9 +37,13 @@ const Home: NextPage<Props> = ({ siteSettings, featuredPosts }) => {
             }}
           />
         </div>
-        <ul>
-          <BlogPost title="not many posts here" />
-        </ul>
+        <div className="p-8 flex justify-center items-center">
+          <Link href="/posts/slug-here">
+            <a className="h2 font-bold rounded border-2 border-accent-1">
+              Go to post
+            </a>
+          </Link>
+        </div>
       </main>
 
       <footer></footer>
