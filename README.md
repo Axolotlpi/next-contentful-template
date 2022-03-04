@@ -22,6 +22,7 @@ By no means is it a framework, just a starting point for something like a small 
 - DotEnv setup (in next.config.js)
 - Starter fonts and colors (in \_document and tailwind.config)
 - Social Graph setup to receive props (from cms)
+- rich-text to react PostBody setup and typed
 
 ## Installation
 
@@ -54,3 +55,5 @@ https://graphql.contentful.com/content/v1/spaces/{SPACE}/explore?access_token={K
 
 queries.ts contains query list and types that go along with them. (current extent of typing is within what is reasonably useful)  
 You'll notice that query has a function in addition to just the gql query. This is to reshape the incoming object/array to make it cleaner/more immediately usefull and is ran in the getContent() function in helpers.
+
+Also, parts of this template are copy paste from current projects, so expect huge ugly commits.
