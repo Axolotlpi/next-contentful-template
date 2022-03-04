@@ -1,6 +1,6 @@
 import { parseISO, format } from 'date-fns';
 import { GraphQLClient } from 'graphql-request';
-import type { Image, ImageTransformOptions, Query } from './queries';
+import type { Asset, ImageTransformOptions, Query } from './queries';
 import { queries, SiteSettings, PageSettings } from './queries';
 
 const endpoint = `https://graphql.contentful.com/content/v1/spaces/${process.env.CONTENTFUL_SPACE_ID}`;
@@ -23,7 +23,7 @@ export function makePostCanonicalUrl(
 
 //for more specific image urls
 export async function getImageUrl(
-  imageRaw: Image,
+  imageRaw: Asset,
   imageTransformOptions: ImageTransformOptions
 ) {
   const image = await getContent(queries.image, {
