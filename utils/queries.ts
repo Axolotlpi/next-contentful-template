@@ -1,5 +1,6 @@
 //this file defines the coupling between cms schema and local types
 import { gql } from 'graphql-request';
+import { Document } from '@contentful/rich-text-types';
 
 export type Query = {
   string: string;
@@ -386,6 +387,11 @@ export type Asset = {
   url: string;
   width: number;
   height: number;
+};
+
+export type RichText = {
+  json: Document;
+  links: Links;
 };
 
 export type Links = {
